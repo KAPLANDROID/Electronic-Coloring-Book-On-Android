@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <ImageView
+        android:id="@+id/imageViewGridItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_button_background"
+        android:contentDescription="@string/image_content_description"
+        android:padding="3dp"
+        android:clickable="true"
+        android:src="@drawable/drawable_color_fill" >
+    </ImageView>
+
+</FrameLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.kaplandroid.coloringbook"
+    android:id="@+id/color_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    <com.kaplandroid.colorbook.ColorPageView
+        android:id="@+id/customView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+    <ImageButton
+        android:id="@+id/buttonOpenLayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/custom_button_background"
+        android:contentDescription="@string/image_content_description"
+        android:onClick="@string/onclickpallete"
+        android:src="@drawable/color_palette" />
+
+    <com.kaplandroid.colorbook.SlidingLayer
+        android:id="@+id/slidingLayer1"
+        android:layout_width="360dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        app:closeOnTapEnabled="false"
+        app:stickTo="left" >
+
+        <include layout="@layout/pallete" />
+    </com.kaplandroid.colorbook.SlidingLayer>
+
+</RelativeLayout>

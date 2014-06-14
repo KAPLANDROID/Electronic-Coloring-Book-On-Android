@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/white" >
+
+    <com.kaplandroid.colorbook.ColorBookViewPager
+        android:id="@+id/customViewPager"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+    </com.kaplandroid.colorbook.ColorBookViewPager>
+
+    <ImageButton
+        android:id="@+id/imageButtonPreviousPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/custom_button_background"
+        android:contentDescription="@string/image_content_description"
+        android:onClick="@string/onclick"
+        android:src="@drawable/navigation_previous_item"
+        android:visibility="gone" />
+
+    <ImageButton
+        android:id="@+id/buttonPaint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/image_content_description"
+        android:onClick="@string/onclick"
+        android:src="@drawable/paint_drawable" />
+
+    <ImageButton
+        android:id="@+id/imageButtonNextPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/custom_button_background"
+        android:contentDescription="@string/image_content_description"
+        android:onClick="@string/onclick"
+        android:src="@drawable/navigation_next_item" />
+
+    <Button
+        android:id="@+id/btnSaved"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="@string/onclick"
+        android:text="Saved Pages" />
+
+    <Button
+        android:id="@+id/btnTakePhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/btnSaved"
+        android:onClick="@string/onclick"
+        android:text="take photo" />
+
+</RelativeLayout>

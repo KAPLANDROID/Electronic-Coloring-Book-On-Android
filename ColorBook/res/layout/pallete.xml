@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200dp"
+    android:layout_height="fill_parent"
+    android:background="@color/button_default_color"
+    android:divider="@drawable/divider_pallete"
+    android:gravity="top"
+    android:orientation="vertical"
+    android:padding="2dp"
+    android:showDividers="middle" >
+
+    <!-- LDPI pallete. Do not edit -->
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_launcher" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|clip_vertical"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/imageButtonEraser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/image_content_description"
+            android:onClick="@string/onclickpallete"
+            android:paddingLeft="3dp"
+            android:paddingRight="5dp"
+            android:src="@drawable/drawable_eraser" />
+
+        <ImageButton
+            android:id="@+id/imageButtonBrush"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/image_content_description"
+            android:onClick="@string/onclickpallete"
+            android:paddingLeft="5dp"
+            android:paddingRight="3dp"
+            android:src="@drawable/drawable_brush" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="2dp"
+        android:text="@string/brush_size"
+        android:textColor="@color/text_color"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <SeekBar
+            android:id="@+id/seekBarBrushSize"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="8.8"
+            android:max="30" />
+
+        <TextView
+            android:id="@+id/textViewBrushSize"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:text="@string/_20"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/text_color" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <com.kaplandroid.colorbook.ColorPickerView
+            android:id="@+id/colorPickerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:paddingTop="0dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="20dp"
+            android:visibility="gone" >
+
+            <GridView
+                android:id="@+id/gridViewRecentColor"
+                android:layout_width="wrap_content"
+                android:layout_height="130dp"
+                android:horizontalSpacing="3dp"
+                android:numColumns="3"
+                android:paddingLeft="3dp"
+                android:verticalSpacing="3dp" >
+            </GridView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/divider"
+        android:orientation="horizontal"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
+        android:showDividers="middle" >
+
+        <TextView
+            android:id="@+id/textViewClear"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/drawable_textview_button"
+            android:clickable="true"
+            android:drawableLeft="@drawable/content_clear"
+            android:gravity="center_vertical|left"
+            android:onClick="@string/onclickpallete"
+            android:text="@string/button_clear"
+            android:textColor="@color/text_color"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textViewSave"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/drawable_textview_button"
+            android:clickable="true"
+            android:drawableLeft="@drawable/content_save"
+            android:gravity="center_vertical|left"
+            android:onClick="@string/onclickpallete"
+            android:text="@string/button_save"
+            android:textColor="@color/text_color"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textViewDone"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/drawable_textview_button"
+            android:clickable="true"
+            android:drawableLeft="@drawable/navigation_accept"
+            android:gravity="center_vertical|left"
+            android:onClick="@string/onclickpallete"
+            android:text="@string/done"
+            android:textColor="@color/text_color"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</LinearLayout>

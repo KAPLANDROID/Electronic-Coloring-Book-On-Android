@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <color name="button_pressed_color">#eee8aa</color>
+   <color name="button_default_color">#eedd82</color>
+   <color name="menu_bg_color">#61CAFB</color>
+   <color name="stroke_color">#006ECC</color>
+   <color name="text_color">#666666</color>
+   <drawable name="textview_normal">#daa520</drawable>
+   <drawable name="textview_pressed">#b8860b</drawable>
+    <drawable name="button_pressed_color">#daa520</drawable>
+   <drawable name="button_default_color">#b8860b</drawable>
+</resources>

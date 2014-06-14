@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <size android:height="1dip" />
+
+    <solid android:color="#0796B9" />
+
+    <gradient
+        android:centerColor="#0796B9"
+        android:endColor="@color/button_default_color"
+        android:startColor="@color/button_default_color"/>
+
+</shape>

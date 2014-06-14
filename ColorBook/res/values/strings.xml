@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ColorBook</string>
+    <string name="action_settings">Settings</string>
+    <string name="image_content_description">imageDesc</string>
+    <string name="button_save">Save</string>
+    <string name="button_clear">Clear</string>
+    <string name="clearcanvas">clearCanvas</string>
+    <string name="showanswer">showAnswer</string>
+    <string name="saveimage">saveImage</string>
+    <string name="accessmenu">accessMenu</string>
+    <string name="title_activity_color">MainActivity</string>
+    
+    <string name="page_number">Page 1 of 2</string>
+ 	<string name="visit_website">Visit Website</string>
+ 	<string name="paint">Paint</string>
+ 	<string name="erasedraw">eraseDraw</string>
+ 	<string name="ok">OK</string>
+ 	<string name="changebrushsize">changeBrushSize</string>
+ 	<string name="showbrushselector">showBrushSelector</string>
+ 	<string name="brush_size">Brush Size</string>
+ 	<string name="color_picker">Color Picker</string>
+ 	<string name="done">Done</string>
+ 	<string name="onclickpallete">onClickPallete</string>
+ 	<string name="_20">20</string>
+ 	<string name="onclickmenu">onClickMenu</string>
+ 	<string name="onclick">onClick</string>
+
+</resources>
