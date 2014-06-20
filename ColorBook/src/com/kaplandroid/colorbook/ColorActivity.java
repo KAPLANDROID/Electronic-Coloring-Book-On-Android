@@ -16,7 +16,6 @@ package com.kaplandroid.colorbook;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -90,17 +89,9 @@ public class ColorActivity extends Activity implements
 			finish();
 		}
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.color, menu);
-		return true;
-	}
-
+ 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
 	}
 

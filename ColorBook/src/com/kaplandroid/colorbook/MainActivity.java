@@ -19,12 +19,9 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
@@ -49,6 +46,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kaplandroid.colorbook.utils.ImageCache;
@@ -86,6 +84,8 @@ public class MainActivity extends FragmentActivity {
 	ImageButton mImageButtonNextPage;
 	ImageButton mImageButtonPreviousPage;
 
+	TextView tvNoMainPage;
+
 	Button btnSavedPages;
 	Button btnTakePhoto;
 	private File folderCamera;
@@ -111,6 +111,9 @@ public class MainActivity extends FragmentActivity {
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
 		mSharedPreferences = getSharedPreferences(Utils.PREFS_NAME, 0);
+
+		tvNoMainPage = (TextView) findViewById(R.id.tvNoMainPage);
+		tvNoMainPage.setVisibility(View.INVISIBLE);
 
 		mImageButtonNextPage = (ImageButton) findViewById(R.id.imageButtonNextPage);
 		mImageButtonPreviousPage = (ImageButton) findViewById(R.id.imageButtonPreviousPage);
@@ -185,8 +188,7 @@ public class MainActivity extends FragmentActivity {
 			}
 			break;
 		case R.id.btnPaint: {
-			Intent intent = new Intent(getApplicationContext(),
-					ColorActivity.class);
+			Intent intent = new Intent(MainActivity.this, ColorActivity.class);
 			intent.putExtra("pagenumber", currentPage);
 			currentFilePath = mAdapter.getItemPath(currentPage);
 			startActivity(intent);
@@ -196,6 +198,25 @@ public class MainActivity extends FragmentActivity {
 			Intent intent = new Intent(getApplicationContext(),
 					SavedPagesActivity.class);
 			startActivity(intent);
+			break;
+		}
+		case R.id.btnMainDelete: {
+
+			if (mAdapter.isDeleteAllowed(mCustomViewPager.getCurrentItem())) {
+
+				File itemToDelete = new File(
+						mAdapter.getItemPath(mCustomViewPager.getCurrentItem()));
+
+				itemToDelete.delete();
+
+				refreshPager();
+
+			} else {
+				Toast.makeText(MainActivity.this,
+						"You can not delete this page", Toast.LENGTH_LONG)
+						.show();
+			}
+
 			break;
 		}
 		case R.id.btnTakePhoto: {
@@ -276,14 +297,20 @@ public class MainActivity extends FragmentActivity {
 
 		@Override
 		public Fragment getItem(int position) {
+			return ImageDetailFragment.newInstance(getItemPath(position),
+					mColorData);
+		}
 
-			String filePath = folder.listFiles()[position].getAbsolutePath();
-
-			return ImageDetailFragment.newInstance(filePath, mColorData);
+		public boolean isDeleteAllowed(int position) {
+			File temp = new File(getItemPath(position));
+			if (temp.getName().contains("page")) {
+				return false;
+			} else {
+				return true;
+			}
 		}
 
 		public String getItemPath(int position) {
-
 			return folder.listFiles()[position].getAbsolutePath();
 		}
 
@@ -374,7 +401,7 @@ public class MainActivity extends FragmentActivity {
 
 		// TO.DO Apply Sobel
 
-		applySobelFilter(bm);
+		applyCannyFilter(bm);
 	}
 
 	@Override
@@ -403,17 +430,15 @@ public class MainActivity extends FragmentActivity {
 	ProgressDialog progress;
 	Mat out;
 
-	private void applySobelFilter(final Bitmap bm) {
+	private void applyCannyFilter(final Bitmap bm) {
 
 		Mat source = new Mat();
 		out = new Mat();
 		// Mat out2 = new Mat();
 		org.opencv.android.Utils.bitmapToMat(bm, source);
 
-		// Imgproc.Sobel(source, out, CvType.CV_8U, 1, 1);
-		Imgproc.Canny(source, out, 80, 90);
+		Imgproc.Canny(source, out, 60, 70);
 		Core.convertScaleAbs(out, out, 10, 0);
-		// Imgproc.cvtColor(out, out2, Imgproc.COLOR_GRAY2BGRA, 4);
 
 		progress = ProgressDialog.show(this, "Loading", "Image is in progress",
 				true);
@@ -424,11 +449,7 @@ public class MainActivity extends FragmentActivity {
 
 			@Override
 			public void onDismiss(DialogInterface arg0) {
-				mAdapter = new ImagePagerFragmentAdapter(
-						getSupportFragmentManager());
-				mCustomViewPager.setAdapter(mAdapter);
-
-				mCustomViewPager.setCurrentItem(mAdapter.getCount() - 1);
+				refreshPager();
 
 			}
 		});
@@ -490,5 +511,25 @@ public class MainActivity extends FragmentActivity {
 		System.out.println("out.channels()   " + out.channels());
 
 		return out;
+	}
+
+	private void refreshPager() {
+		mAdapter = new ImagePagerFragmentAdapter(getSupportFragmentManager());
+		mCustomViewPager.setAdapter(mAdapter);
+
+		mCustomViewPager.setCurrentItem(mAdapter.getCount() - 1);
+
+		if (mAdapter.getCount() == 0) {
+			tvNoMainPage.setVisibility(View.VISIBLE);
+			mCustomViewPager.setVisibility(View.INVISIBLE);
+			findViewById(R.id.btnPaint).setVisibility(View.INVISIBLE);
+			findViewById(R.id.btnMainDelete).setVisibility(View.INVISIBLE);
+		} else {
+			tvNoMainPage.setVisibility(View.INVISIBLE);
+			mCustomViewPager.setVisibility(View.VISIBLE);
+			findViewById(R.id.btnPaint).setVisibility(View.VISIBLE);
+			findViewById(R.id.btnMainDelete).setVisibility(View.VISIBLE);
+		}
+
 	}
 }

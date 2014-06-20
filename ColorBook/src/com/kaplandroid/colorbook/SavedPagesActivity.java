@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.kaplandroid.coloringbook.R;
 
@@ -21,17 +22,33 @@ import com.kaplandroid.coloringbook.R;
 public class SavedPagesActivity extends FragmentActivity {
 
 	ViewPager pager;
+	private SavedPagerFragmentAdapter adapter;
+	TextView tvNoSavedPage;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_savedpages);
 
+		tvNoSavedPage = (TextView) findViewById(R.id.tvNoSavedPage);
+
 		pager = (ViewPager) findViewById(R.id.viewPagerSaved);
-		SavedPagerFragmentAdapter adapter = new SavedPagerFragmentAdapter(
-				getSupportFragmentManager());
+		refreshPager();
+
+	}
+
+	private void refreshPager() {
+		adapter = new SavedPagerFragmentAdapter(getSupportFragmentManager());
 		pager.setAdapter(adapter);
-		
+		if (adapter.getCount() == 0) {
+			tvNoSavedPage.setVisibility(View.VISIBLE);
+			pager.setVisibility(View.INVISIBLE);
+			findViewById(R.id.btnSavedDelete).setVisibility(View.INVISIBLE);
+		} else {
+			tvNoSavedPage.setVisibility(View.INVISIBLE);
+			pager.setVisibility(View.VISIBLE);
+			findViewById(R.id.btnSavedDelete).setVisibility(View.VISIBLE);
+		}
 	}
 
 	/**
@@ -42,6 +59,16 @@ public class SavedPagesActivity extends FragmentActivity {
 	public void onClick(View view) {
 		int id = view.getId();
 		switch (id) {
+
+		case R.id.btnSavedDelete:
+
+			File itemToDelete = new File(adapter.getItemPath(pager
+					.getCurrentItem()));
+
+			itemToDelete.delete();
+
+			refreshPager();
+			break;
 		}
 
 	}

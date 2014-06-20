@@ -15,6 +15,19 @@
         android:background="#ffffff" >
     </com.kaplandroid.colorbook.ColorBookViewPager>
 
+    <TextView
+        android:id="@+id/tvNoMainPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/customViewPager"
+        android:layout_alignLeft="@+id/customViewPager"
+        android:layout_alignRight="@+id/customViewPager"
+        android:layout_alignTop="@+id/customViewPager"
+        android:gravity="center"
+        android:text="There isn&apos;t any saved pages"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:textStyle="bold" />
     <LinearLayout
         android:id="@+id/llMainMenu"
         android:layout_width="wrap_content"
@@ -30,25 +43,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:background="#FF892F"
             android:onClick="@string/onclick"
-            android:text="Take\nPhoto" />
+            android:text="Take\nPhoto"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnSaved"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:background="#D19847"
             android:onClick="@string/onclick"
-            android:text="Saved\nPages" />
-
-        <Button
-            android:id="@+id/btnPaint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:contentDescription="@string/image_content_description"
-            android:onClick="@string/onclick"
-            android:text="Paint " />
+            android:text="Saved\nPages"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <RelativeLayout
@@ -81,6 +91,35 @@
             android:onClick="@string/onclick"
             android:src="@drawable/navigation_previous_item"
             android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" >
+
+            <Button
+                android:id="@+id/btnMainDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#D57172"
+                android:onClick="@string/onclick"
+                android:text="Delete"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnPaint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="#7BAACD"
+                android:contentDescription="@string/image_content_description"
+                android:onClick="@string/onclick"
+                android:text="Paint "
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
+        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>

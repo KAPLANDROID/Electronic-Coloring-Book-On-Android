@@ -24,15 +24,6 @@
         android:paddingTop="10dp" >
 
         <ImageButton
-            android:id="@+id/imageButtonNextPage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:contentDescription="@string/image_content_description"
-            android:onClick="@string/onclick"
-            android:src="@drawable/navigation_next_item" />
-
-        <ImageButton
             android:id="@+id/imageButtonPreviousPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,6 +33,37 @@
             android:onClick="@string/onclick"
             android:src="@drawable/navigation_previous_item"
             android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btnSavedDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#D57172"
+                android:onClick="@string/onclick"
+                android:text="Delete"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
+        </LinearLayout>
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvNoSavedPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/viewPagerSaved"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="There isn&apos;t any saved pages"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
