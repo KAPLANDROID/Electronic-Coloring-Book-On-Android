@@ -2,12 +2,14 @@ package com.kaplandroid.colorbook;
 
 import java.io.File;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.kaplandroid.coloringbook.R;
 
@@ -18,36 +20,100 @@ import com.kaplandroid.coloringbook.R;
  */
 public class SavedPagesActivity extends FragmentActivity {
 
-	// llSavedScroll
-
-	LinearLayout llSavedScroll;
-	private File folder;
+	ViewPager pager;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_savedpages);
 
-		llSavedScroll = (LinearLayout) findViewById(R.id.llSavedScroll);
+		pager = (ViewPager) findViewById(R.id.viewPagerSaved);
+		SavedPagerFragmentAdapter adapter = new SavedPagerFragmentAdapter(
+				getSupportFragmentManager());
+		pager.setAdapter(adapter);
+		
+	}
 
-		folder = new File(Settings.outputFolderPath);
-
-		int count = folder.listFiles().length;
-
-		System.out.println(count);
-
-		for (int i = 0; i < count; i++) {
-
-			ImageView iv = new ImageView(this);
-			BitmapFactory.Options options = new BitmapFactory.Options();
-			options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-			Bitmap bitmap = BitmapFactory.decodeFile(
-					folder.listFiles()[i].toString(), options);
-			iv.setImageBitmap(bitmap);
-
-			llSavedScroll.addView(iv);
+	/**
+	 * SavedPagesActivity layout onclick method.
+	 * 
+	 * @param view
+	 */
+	public void onClick(View view) {
+		int id = view.getId();
+		switch (id) {
 		}
 
+	}
+
+	/**
+	 * Image Pager Adapter This class populates the View pager with images using
+	 * Fragments
+	 * 
+	 * @author KAPLANDROID
+	 * 
+	 */
+	public class SavedPagerFragmentAdapter extends FragmentStatePagerAdapter {
+
+		int size;
+		private File folder;
+
+		public SavedPagerFragmentAdapter(FragmentManager fm) {
+			super(fm);
+			// this.size = mColorData.getSize();
+
+			folder = new File(Settings.outputFolderPath);
+			if (!folder.exists()) {
+				folder.mkdir();
+			}
+
+			this.size = folder.listFiles().length;
+
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+
+			String filePath = folder.listFiles()[position].getAbsolutePath();
+
+			return SavedPageFragment.newInstance(filePath);
+		}
+
+		public String getItemPath(int position) {
+
+			return folder.listFiles()[position].getAbsolutePath();
+		}
+
+		@Override
+		public int getCount() {
+			return size;
+		}
+
+		@Override
+		public void destroyItem(ViewGroup container, int position, Object object) {
+			super.destroyItem(container, position, object);
+			SavedPageFragment fragment = (SavedPageFragment) object;
+			((ViewPager) container).removeView(fragment.getView());
+			if (fragment.drawable != null)
+				fragment.drawable.getBitmap().recycle();
+			fragment = null;
+		}
+
+		@Override
+		public Fragment instantiateItem(ViewGroup container, int position) {
+			return (Fragment) super.instantiateItem(container, position);
+		}
+
+		@Override
+		public void setPrimaryItem(ViewGroup container, int position,
+				Object object) {
+			super.setPrimaryItem(container, position, object);
+		}
+
+		@Override
+		public void finishUpdate(ViewGroup container) {
+			super.finishUpdate(container);
+		}
 	}
 
 }

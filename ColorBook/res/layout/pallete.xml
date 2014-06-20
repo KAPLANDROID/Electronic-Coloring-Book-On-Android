@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="200dp"
+    android:layout_width="240dp"
     android:layout_height="fill_parent"
-    android:background="@color/button_default_color"
+    android:background="#FA333333"
     android:divider="@drawable/divider_pallete"
     android:gravity="top"
     android:orientation="vertical"
@@ -55,7 +55,7 @@
         android:layout_marginTop="20dp"
         android:paddingLeft="2dp"
         android:text="@string/brush_size"
-        android:textColor="@color/text_color"
+        android:textColor="#FFFFFF"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -78,7 +78,7 @@
             android:layout_weight="1.2"
             android:text="@string/_20"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/text_color" />
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <LinearLayout
@@ -92,6 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:layout_marginBottom="5dp"
             android:paddingTop="0dp" />
 
         <LinearLayout
@@ -117,7 +118,6 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@drawable/divider"
         android:orientation="horizontal"
         android:paddingBottom="3dp"
         android:paddingTop="3dp"
@@ -128,42 +128,47 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/drawable_textview_button"
+            android:background="#797876"
             android:clickable="true"
             android:drawableLeft="@drawable/content_clear"
             android:gravity="center_vertical|left"
             android:onClick="@string/onclickpallete"
             android:text="@string/button_clear"
-            android:textColor="@color/text_color"
-            android:textSize="14sp" />
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textViewSave"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:background="@drawable/drawable_textview_button"
+            android:background="#7BAACD"
             android:clickable="true"
             android:drawableLeft="@drawable/content_save"
             android:gravity="center_vertical|left"
             android:onClick="@string/onclickpallete"
             android:text="@string/button_save"
-            android:textColor="@color/text_color"
-            android:textSize="14sp" />
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textViewDone"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/drawable_textview_button"
+            android:background="#D57172"
             android:clickable="true"
             android:drawableLeft="@drawable/navigation_accept"
             android:gravity="center_vertical|left"
             android:onClick="@string/onclickpallete"
             android:text="@string/done"
-            android:textColor="@color/text_color"
-            android:textSize="14sp" />
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

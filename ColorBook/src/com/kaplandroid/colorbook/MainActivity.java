@@ -21,13 +21,19 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -178,7 +184,7 @@ public class MainActivity extends FragmentActivity {
 				currentFilePath = mAdapter.getItemPath(currentPage);
 			}
 			break;
-		case R.id.buttonPaint: {
+		case R.id.btnPaint: {
 			Intent intent = new Intent(getApplicationContext(),
 					ColorActivity.class);
 			intent.putExtra("pagenumber", currentPage);
@@ -195,7 +201,7 @@ public class MainActivity extends FragmentActivity {
 		case R.id.btnTakePhoto: {
 			currentname = "" + System.currentTimeMillis();
 
-			// TODO
+			// TO.DO
 			folderCamera = new File(Settings.cameraCacheFolderPath);
 			if (!folderCamera.exists()) {
 				folderCamera.mkdir();
@@ -337,10 +343,6 @@ public class MainActivity extends FragmentActivity {
 				prepaireOutputFile(new File(folderCamera, "" + currentname
 						+ ".jpg").toString());
 
-				mAdapter = new ImagePagerFragmentAdapter(
-						getSupportFragmentManager());
-				mCustomViewPager.setAdapter(mAdapter);
-
 				//
 
 			}
@@ -370,7 +372,7 @@ public class MainActivity extends FragmentActivity {
 
 		Bitmap bm = Bitmap.createScaledBitmap(bitmap, NWidth, Nheight, true);
 
-		// TODO Apply Sobel
+		// TO.DO Apply Sobel
 
 		applySobelFilter(bm);
 	}
@@ -398,45 +400,95 @@ public class MainActivity extends FragmentActivity {
 			}
 		}
 	};
+	ProgressDialog progress;
+	Mat out;
 
-	private void applySobelFilter(Bitmap bm) {
+	private void applySobelFilter(final Bitmap bm) {
 
 		Mat source = new Mat();
-		Mat out = new Mat();
-		Mat out2 = new Mat();
+		out = new Mat();
+		// Mat out2 = new Mat();
 		org.opencv.android.Utils.bitmapToMat(bm, source);
 
-//		Imgproc.Sobel(source, out, CvType.CV_8U, 1, 1);
-		Imgproc.Canny(source, out, 80,90);
+		// Imgproc.Sobel(source, out, CvType.CV_8U, 1, 1);
+		Imgproc.Canny(source, out, 80, 90);
 		Core.convertScaleAbs(out, out, 10, 0);
-		Imgproc.cvtColor(out, out2, Imgproc.COLOR_GRAY2BGRA, 4);
+		// Imgproc.cvtColor(out, out2, Imgproc.COLOR_GRAY2BGRA, 4);
 
+		progress = ProgressDialog.show(this, "Loading", "Image is in progress",
+				true);
+		progress.setCancelable(false);
+		progress.setCanceledOnTouchOutside(false);
 
-		
-		org.opencv.android.Utils.matToBitmap(out, bm);
+		progress.setOnDismissListener(new OnDismissListener() {
 
+			@Override
+			public void onDismiss(DialogInterface arg0) {
+				mAdapter = new ImagePagerFragmentAdapter(
+						getSupportFragmentManager());
+				mCustomViewPager.setAdapter(mAdapter);
 
-		System.out.println(bm.getPixel(44, 185));
-		System.out.println(bm.getPixel(144, 15));
-		
-		
-		File folder = new File(Settings.inputFolderPath);
-		if (!folder.exists()) {
-			folder.mkdir();
+				mCustomViewPager.setCurrentItem(mAdapter.getCount() - 1);
+
+			}
+		});
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				out = makeItTransparent(out);
+
+				org.opencv.android.Utils.matToBitmap(out, bm);
+
+				bm.setHasAlpha(true);
+
+				int width = bm.getWidth();
+				int height = bm.getHeight();
+				for (int x = 0; x < width; x++) {
+					for (int y = 0; y < height; y++) {
+						int argb = bm.getPixel(x, y);
+						if (argb == Color.WHITE) {
+							bm.setPixel(x, y, Color.TRANSPARENT);
+						}
+					}
+				}
+
+				File folder = new File(Settings.inputFolderPath);
+				if (!folder.exists()) {
+					folder.mkdir();
+				}
+
+				File photoOut = new File(folder + File.separator + currentname
+						+ "_out.png");
+				try {
+					// TO.DO check for png
+					photoOut.createNewFile();
+					FileOutputStream ostream = new FileOutputStream(photoOut);
+					bm.compress(CompressFormat.PNG, 70, ostream);
+					ostream.close();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+
+				progress.dismiss();
+
+			}
+		}).start();
+
+	}
+
+	private Mat makeItTransparent(Mat out) {
+		for (int i = 0; i < out.height(); i++) {
+			for (int j = 0; j < out.width(); j++) {
+
+				out.put(i, j, (out.get(i, j)[0] == 0) ? 255.0 : 0.0);
+
+			}
 		}
+		System.out.println("out.channels()   " + out.channels());
 
-		File photoOut = new File(folder + File.separator + currentname
-				+ "_out.png");
-		try {
-			// TODO check for png
-			photoOut.createNewFile();
-			FileOutputStream ostream = new FileOutputStream(photoOut);
-			bm.compress(CompressFormat.PNG, 70, ostream);
-			ostream.close();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		} catch (Exception e2) {
-			e2.printStackTrace();
-		}
+		return out;
 	}
 }

@@ -19,9 +19,9 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/custom_button_background"
         android:contentDescription="@string/image_content_description"
         android:onClick="@string/onclickpallete"
+        android:padding="15dp"
         android:src="@drawable/color_palette" />
 
     <com.kaplandroid.colorbook.SlidingLayer

@@ -134,11 +134,8 @@ public class ColorPageView extends View implements OnTouchListener {
 			mBitmapWidth = mBitmap.getWidth();
 			mBitmapHeight = mBitmap.getHeight();
 
-			if (mColorData.getPageType(mPageNum) == 0) {
-				isJpg = true;
-			} else if (mColorData.getPageType(mPageNum) == 1) {
-				isJpg = false;
-			}
+			isJpg = !mBitmap.hasAlpha();
+
 		}
 
 		mWidth = getWidth();
@@ -283,14 +280,13 @@ public class ColorPageView extends View implements OnTouchListener {
 				.getExternalStorageState())) {
 
 			File colorPagesFolder = new File(Settings.outputFolderPath);
-			
+
 			if (!colorPagesFolder.exists())
 				colorPagesFolder.mkdir();
-			
+
 			try {
 				Calendar cal = Calendar.getInstance();
-				String append = "kaplanOut"
-						+ cal.get(Calendar.DAY_OF_MONTH)
+				String append = "kaplanOut" + cal.get(Calendar.DAY_OF_MONTH)
 						+ cal.get(cal.get(Calendar.MONTH))
 						+ cal.get(Calendar.YEAR) + cal.get(Calendar.HOUR)
 						+ cal.get(Calendar.MINUTE) + cal.get(Calendar.SECOND)
