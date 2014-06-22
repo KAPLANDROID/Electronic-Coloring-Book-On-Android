@@ -43,7 +43,7 @@ public class ColorActivity extends Activity implements
 	ColorsList mColorsList;
 	TextView mTextViewBrushSize;
 
-	int defaultBrushSõze = 12;
+	int defaultBrushSize = 12;
 
 	ImageButton mImageButtonEraser, mImageButtonBrush;
 
@@ -70,9 +70,9 @@ public class ColorActivity extends Activity implements
 			mColorPickerView.setOnColorChangeListener(this);
 
 			mSeekBarBrushSize = (SeekBar) findViewById(R.id.seekBarBrushSize);
-			mSeekBarBrushSize.setProgress(defaultBrushSõze);
+			mSeekBarBrushSize.setProgress(defaultBrushSize);
 			mTextViewBrushSize = (TextView) findViewById(R.id.textViewBrushSize);
-			mTextViewBrushSize.setText("" + defaultBrushSõze);
+			mTextViewBrushSize.setText("" + defaultBrushSize);
 
 			mGridViewRecentColors = (GridView) findViewById(R.id.gridViewRecentColor);
 			mColorsList = new ColorsList(this);
