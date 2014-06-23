@@ -440,6 +440,11 @@ public class MainActivity extends FragmentActivity {
 		Imgproc.Canny(source, out, 60, 70);
 		Core.convertScaleAbs(out, out, 10, 0);
 
+		addTransparentLayer(bm);
+
+	}
+
+	private void addTransparentLayer(final Bitmap bm) {
 		progress = ProgressDialog.show(this, "Loading", "Image is in progress",
 				true);
 		progress.setCancelable(false);
@@ -457,7 +462,7 @@ public class MainActivity extends FragmentActivity {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				out = makeItTransparent(out);
+				out = swapBackAndWhitePixels(out);
 
 				org.opencv.android.Utils.matToBitmap(out, bm);
 
@@ -497,10 +502,9 @@ public class MainActivity extends FragmentActivity {
 
 			}
 		}).start();
-
 	}
 
-	private Mat makeItTransparent(Mat out) {
+	private Mat swapBackAndWhitePixels(Mat out) {
 		for (int i = 0; i < out.height(); i++) {
 			for (int j = 0; j < out.width(); j++) {
 

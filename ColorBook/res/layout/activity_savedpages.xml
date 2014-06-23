@@ -10,7 +10,8 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/rlSavedBottom"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" >
+        android:layout_below="@+id/textView1" >
+
     </android.support.v4.view.ViewPager>
 
     <RelativeLayout
@@ -59,11 +60,23 @@
         android:layout_alignBottom="@+id/viewPagerSaved"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_alignTop="@+id/viewPagerSaved"
         android:gravity="center"
         android:text="There isn&apos;t any saved pages"
         android:textColor="#ffffff"
         android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Saved Pages"
+        android:textColor="#FFBC3E"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
 </RelativeLayout>
