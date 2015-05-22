@@ -34,6 +34,120 @@
 <p>A coloring book is a type of book containing line art to which a reader may add color using crayons, colored pencils, marker pens, paint or other artistic media. Traditional coloring books and coloring pages are printed on paper or card. </p>
 
 <p>Aim of this project is to help children for using their android devices as a coloring book. They can use predefined pages or create their own pages. In order to create own coloring page there are some image processing techniques and libraries used. Canny Edge Detector algorithm is implemented for creating black edge lines. After having lines other parts of picture replaced with transparent layer so when user starts coloring the page he can easily color transparent layer. After finishing coloring result image will be on device’s image gallery.</p>
+
+<h2>
+<a id="project-development" class="anchor" href="#project-development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project Development</h2>
+
+<p>In this project OpenCV library and Android platform used to implement software. This
+project includes 3 parts.
+1. Processing image taken from device camera
+2. Using input image as coloring page and coloring this page.
+3. Viewing saved pages.</p>
+
+<p>￼</p>
+
+<h1>
+<a id="1-processing-image-taken-from-device-camera" class="anchor" href="#1-processing-image-taken-from-device-camera" aria-hidden="true"><span class="octicon octicon-link"></span></a>1 Processing Image Taken From Device Camera</h1>
+
+<p>In this project user can create his own coloring page by just taking photo via camera. When
+user takes photo image processing starts and converts that photo to color page.</p>
+
+<p><img src="http://i.imgur.com/q1kjwQR.png" alt=""></p>
+
+<p>When user clicks “Take Photo” button it will open camera software to capture photo. To do this, in MainActivity.java line 222 there is a code for this.</p>
+
+<p><code>case R.id.btnTakePhoto: {
+currentname = "" + System.currentTimeMillis();
+// TO.DO
+folderCamera = new File(Settings.cameraCacheFolderPath); if (!folderCamera.exists()) {
+folderCamera.mkdir(); }
+Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); File f = new File(folderCamera, currentname + ".jpg"); intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f)); startActivityForResult(intent, REQUESTCODE_CAMERA);
+break; }</code></p>
+
+<p>After taking the picture, that picture will be stored in “cameraCacheFolderPath” . When saving photo is done line 362 starts working. Firstly we resize the image because it is so big to process. “prepaireOutputFile(String sourcePath)” this method does this work.</p>
+
+<p>When resizing is done we are ready to apply Canny Edge Detector “In line 404”.  </p>
+
+<p><code>private void applyCannyFilter(final Bitmap bm) {
+Mat source = new Mat();
+out = new Mat();
+// Mat out2 = new Mat(); org.opencv.android.Utils.bitmapToMat(bm, source);
+Imgproc.Canny(source, out, 60, 70); Core.convertScaleAbs(out, out, 10, 0);
+addTransparentLayer(bm); }</code></p>
+
+<p>After finding edges we will have an image like in Figure 4-3. Now we have to swap white pixels with black ones and black pixels with white ones and at last we will add transparent layer to the image. All of this work is done in “addTransparentLayer(final Bitmap bm)” method.</p>
+
+<p><code>private Mat ￼ (Mat out) { for (int i = 0; i &lt; out.height(); i++) {
+for (int j = 0; j &lt; out.width(); j++) {
+out.put(i, j, (out.get(i, j)[0] == 0) ? 255.0 :
+0.0);
+}
+}
+return out; }</code></p>
+
+<p>The code above is swapping black and white pixels in the Matrix. It travers over all of the pixels. 0 is black and 255 represents white pixel. Now we have only black lines.</p>
+
+<p><img src="http://i.imgur.com/6BM4fbo.png" alt=""></p>
+
+<p>Now we have to remove white pixels and add transparent layer to image. To do this first we need to convert matrix to bitmap and apply the following code.</p>
+
+<p><code>out = swapBackAndWhitePixels(out); org.opencv.android.Utils.matToBitmap(out, bm); bm.setHasAlpha(true);
+int width = bm.getWidth();
+int height = bm.getHeight();
+for (int x = 0; x &lt; width; x++) {
+for (int y = 0; y &lt; height; y++) { int argb = bm.getPixel(x, y); if (argb == Color.WHITE) {
+} }</code></p>
+
+<p>Now our page is ready to save.</p>
+
+<p><code>File folder = new File(Settings.inputFolderPath); if (!folder.exists()) {
+folder.mkdir(); }
+File photoOut = new File(folder + File.separator + currentname + "_out.png");
+try {
+// TO.DO check for png photoOut.createNewFile(); FileOutputStream ostream = new
+FileOutputStream(photoOut); bm.compress(CompressFormat.PNG, 70, ostream); ostream.close();
+} catch (IOException e1) { e1.printStackTrace();
+} catch (Exception e2) { e2.printStackTrace();
+}</code></p>
+
+<p>As a result we have coloring page with only black lines. Now we successfully convert photo to coloring page.</p>
+
+<p><img src="http://i.imgur.com/rRDwbk5.png" alt="Before">
+<strong>Before</strong></p>
+
+<p><img src="http://i.imgur.com/Tih2bMX.png" alt="After">
+<strong>After</strong></p>
+
+<h1>
+<a id="2-coloring-page" class="anchor" href="#2-coloring-page" aria-hidden="true"><span class="octicon octicon-link"></span></a>2 Coloring Page</h1>
+
+<p>Coloring page is implemented in “ColorActivity.java”. This page contains painting area and coloring pallet.</p>
+
+<p><img src="http://i.imgur.com/KXSEA5C.png" alt="Before coloring"></p>
+
+<p><img src="http://i.imgur.com/vi3hBy8.png" alt="While Coloring"></p>
+
+<p>User can open pallet and easily pick color and brush size. If he wants to clear and restart coloring clear button removes all colors in page. There is an eraser for removing color from page. It is also resizable like the brush.</p>
+
+<p><img src="http://i.imgur.com/7jG1wv5.png" alt="Saving Coloring Page"></p>
+
+<p>Saved image is accessible from “Saved Pages” screen or Gallery application on the device.</p>
+
+<h1>
+<a id="3-saved-pages" class="anchor" href="#3-saved-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>3 Saved Pages</h1>
+
+<p>In this screen user can see saved coloring pages. She can change picture by just swiping the pages. She can share these pages via mail or social media like facebook and twitter.</p>
+
+<p><img src="http://i.imgur.com/ATywYgo.png" alt="Swiping between pages"></p>
+
+<p><img src="http://i.imgur.com/Q2Zn7Ok.png" alt="Latest Saved Page"></p>
+
+<h2>
+<a id="conclusion" class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h2>
+
+<p>In this project, we have given information about Computer Vision, Android mobile software development and OpenCV. We also explained Android Development Environment deeply. Canny Edge Detector is good solution for detecting edges.</p>
+
+<p>The problem that I faced in this project is device hardware limitations and unsupported methods in older versions of Android OS. For example setting alpha channel via android is available only Android 4.0 and newer version. Also older phones can’t easily convert images to pages. There were some caching algorithms used for solving this problem.</p>
         </section>
 
         <aside id="sidebar">
