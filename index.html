@@ -1,34 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <meta charset="UTF-8">
+    <title>Electronic Coloring Book On Android by KAPLANDROID</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    <title>Electronic Coloring Book On Android by KAPLANDROID</title>
   </head>
-
   <body>
-    <header>
-      <div class="inner">
-        <h1>Electronic Coloring Book On Android</h1>
-        <h2></h2>
-        <a href="https://github.com/KAPLANDROID/Electronic-Coloring-Book-On-Android" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
+    <section class="page-header">
+      <h1 class="project-name">Electronic Coloring Book On Android</h1>
+      <h2 class="project-tagline"></h2>
+      <a href="https://github.com/KAPLANDROID/Electronic-Coloring-Book-On-Android" class="btn">View on GitHub</a>
+      <a href="https://github.com/KAPLANDROID/Electronic-Coloring-Book-On-Android/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/KAPLANDROID/Electronic-Coloring-Book-On-Android/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h3>
+    <section class="main-content">
+      <h3>
 <a id="electronic-coloring-book-on-android" class="anchor" href="#electronic-coloring-book-on-android" aria-hidden="true"><span class="octicon octicon-link"></span></a>Electronic Coloring Book On Android</h3>
 
 <p>A coloring book is a type of book containing line art to which a reader may add color using crayons, colored pencils, marker pens, paint or other artistic media. Traditional coloring books and coloring pages are printed on paper or card. </p>
@@ -39,10 +30,13 @@
 <a id="project-development" class="anchor" href="#project-development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project Development</h2>
 
 <p>In this project OpenCV library and Android platform used to implement software. This
-project includes 3 parts.
-1. Processing image taken from device camera
-2. Using input image as coloring page and coloring this page.
-3. Viewing saved pages.</p>
+project includes 3 parts.</p>
+
+<ol>
+<li><p>Processing image taken from device camera</p></li>
+<li><p>Using input image as coloring page and coloring this page.</p></li>
+<li><p>Viewing saved pages.</p></li>
+</ol>
 
 <p>￼</p>
 
@@ -57,12 +51,16 @@ user takes photo image processing starts and converts that photo to color page.<
 <p>When user clicks “Take Photo” button it will open camera software to capture photo. To do this, in MainActivity.java line 222 there is a code for this.</p>
 
 <p><code>case R.id.btnTakePhoto: {
-currentname = "" + System.currentTimeMillis();
-// TO.DO
-folderCamera = new File(Settings.cameraCacheFolderPath); if (!folderCamera.exists()) {
-folderCamera.mkdir(); }
-Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); File f = new File(folderCamera, currentname + ".jpg"); intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f)); startActivityForResult(intent, REQUESTCODE_CAMERA);
-break; }</code></p>
+             currentname = "" + System.currentTimeMillis();
+             // TO.DO
+             folderCamera = new File(Settings.cameraCacheFolderPath); 
+             if (!folderCamera.exists()) {
+                 folderCamera.mkdir(); 
+             }
+             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); File f = new File(folderCamera, currentname + ".jpg"); 
+             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f)); startActivityForResult(intent, REQUESTCODE_CAMERA);
+             break; 
+         }</code></p>
 
 <p>After taking the picture, that picture will be stored in “cameraCacheFolderPath” . When saving photo is done line 362 starts working. Firstly we resize the image because it is so big to process. “prepaireOutputFile(String sourcePath)” this method does this work.</p>
 
@@ -148,25 +146,16 @@ FileOutputStream(photoOut); bm.compress(CompressFormat.PNG, 70, ostream); ostrea
 <p>In this project, we have given information about Computer Vision, Android mobile software development and OpenCV. We also explained Android Development Environment deeply. Canny Edge Detector is good solution for detecting edges.</p>
 
 <p>The problem that I faced in this project is device hardware limitations and unsupported methods in older versions of Android OS. For example setting alpha channel via android is available only Android 4.0 and newer version. Also older phones can’t easily convert images to pages. There were some caching algorithms used for solving this problem.</p>
-        </section>
 
-        <aside id="sidebar">
-          <a href="https://github.com/KAPLANDROID/Electronic-Coloring-Book-On-Android/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/KAPLANDROID/Electronic-Coloring-Book-On-Android/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/KAPLANDROID/Electronic-Coloring-Book-On-Android">Electronic Coloring Book On Android</a> is maintained by <a href="https://github.com/KAPLANDROID">KAPLANDROID</a>.</span>
 
-          <p class="repo-owner"><a href="https://github.com/KAPLANDROID/Electronic-Coloring-Book-On-Android"></a> is maintained by <a href="https://github.com/KAPLANDROID">KAPLANDROID</a>.</p>
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
 
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
-    </div>
+    </section>
 
   
   </body>
 </html>
+
